@@ -32,7 +32,7 @@
     - name: Create .snmp/snmp.conf
       copy:
         src: files/snmp/snmp.conf
-        dst: /home/lab/.snmp/snmp.conf
+        dest: /home/lab/.snmp/snmp.conf
         mode: 600
       become: false
       tags: snmp_client

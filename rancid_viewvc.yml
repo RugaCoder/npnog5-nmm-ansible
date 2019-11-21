@@ -39,7 +39,7 @@
     - name: enable ViewVC with apache
       command: a2enconf viewvc.conf
       args:
-        creates: /etc/apache2/sites-enabled/viewvc.conf
+        creates: /etc/apache2/conf-enabled/viewvc.conf
       notify: restart apache2
       tags: apache_config
 
