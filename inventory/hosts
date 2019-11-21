@@ -3,3 +3,6 @@ vmX-gY.lab.workalaya.net
 
 [snmp_hosts]
 vmX-gY.lab.workalaya.net
+
+[smokeping_hosts]
+vmX-gY.lab.workalaya.net
