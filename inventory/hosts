@@ -1,2 +1,5 @@
 [nagios_hosts]
 vmX-gY.lab.workalaya.net
+
+[snmp_hosts]
+vmX-gY.lab.workalaya.net
