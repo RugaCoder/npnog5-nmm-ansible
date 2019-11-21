@@ -3,4 +3,5 @@ ansible_become_pass: lab
 
 class_password: lab
 class_group: Y
+class_en_password: lab
 
