@@ -66,6 +66,7 @@
             dest: '/usr/local/src/Netdot/{{ item }}'
           with_items:
             - netdot-perldeps.patch
+          ignore_errors: true
 
         - name: apply patches
           shell: patch -p0 < {{item}}
