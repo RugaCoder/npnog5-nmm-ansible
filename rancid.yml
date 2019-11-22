@@ -1,0 +1,85 @@
+- hosts: rancid_hosts
+  become: true
+  tasks:
+    - name: ensure package cache is up to date
+      apt: update_cache=yes cache_valid_time=3600
+      tags: install
+
+    - name: Set RANCID options
+      debconf:
+        name: "{{ item.name }}"
+        question: "{{ item.question }}"
+        value: "{{ item.value }}"
+        vtype: "string"
+      with_items:
+        - { name: "rancid", question: "rancid/warning", value: "" }
+        - { name: "rancid", question: "rancid/go_on", value: "true" }
+      tags: install
+
+    - name: install rancid and dependencies
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - subversion
+        - telnet
+        - mutt
+        - rancid
+      tags: install
+
+    - name: Add rancid mail alias
+      lineinfile:
+        dest: "/etc/aliases"
+        line: "{{ item }}: lab"
+      with_items:
+        - randic-routers
+        - rancid-admin-routers
+      register: mailalias
+      tags: mail_alias
+
+    - name: Update mail alias
+      shell: newaliases
+      when: mailalias.changed
+      tags: mail_alias
+
+    - name: Configure rancid
+      lineinfile:
+        dest: "/etc/rancid/rancid.conf"
+        line: "{{ item.line }}"
+        regex: "{{ item.regex }}"
+      with_items:
+        - { line: "CVSROOT=$BASEDIR/svn; export CVSROOT", regex: "^CVSROOT" }
+        - { line: "RCSSYS=svn; export RCSSYS", regex: "^RCSSYS" }
+      tags: config
+  
+    - name: Configure rancid groups
+      block:
+        - lineinfile:
+            path: "/etc/rancid/rancid.conf"
+            regexp: "^LIST_OF_GROUPS="
+            state: absent
+          check_mode: yes
+          changed_when: false
+          register: rancidgroups
+        - lineinfile:
+            dest: "/etc/rancid/rancid.conf"
+            line: "LIST_OF_GROUPS="
+          when: rancidgroups is not defined or not rancidgroups.found
+        - lineinfile:
+            dest: "/etc/rancid/rancid.conf"
+            line: "LIST_OF_GROUPS=\"{{ rancid_groups|join(' ') }}\""
+            regex: "^LIST_OF_GROUPS"
+          vars:
+            rancid_groups:
+              - routers
+      tags: config
+
+    - name: /var/lib/rancid/.cloginrc
+      template:
+        src: templates/rancid/.cloginrc
+        dest: /var/lib/rancid/.cloginrc
+        backup: yes
+        owner: rancid
+        group: rancid
+        mode: 0600
+      tags: cloginrc

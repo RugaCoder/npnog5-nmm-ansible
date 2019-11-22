@@ -43,7 +43,7 @@
       notify: restart apache2
       tags: apache_config
 
-    - name: check viewvc .htpasswd dile
+    - name: check viewvc .htpasswd file
       stat:
         path: /etc/viewvc/.htpasswd
       ignore_errors: true
@@ -57,7 +57,7 @@
       when: not viewvc_pwfile_exists
       tags: secure_viewvc
 
-    - name: Create nagios admin user
+    - name: Create lab user on .htpasswd
       htpasswd:
         path: /etc/viewvc/.htpasswd
         name: lab
