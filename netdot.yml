@@ -83,7 +83,7 @@
           with_items:
             - { search: "dnssec-tools", replace: "libnet-dns-zonefile-fast-perl" }
             - { search: "deb http", replace: "deb [allow-insecure=yes] http" }
-            - { search: "deb-src http", replace: "deb [allow-insecure=yes] http" }
+            - { search: "deb-src http", replace: "deb-src [allow-insecure=yes] http" }
 
         - name: build netdot pre-requisites
           shell: echo -e "mysql\ny\ny\ny\n" | make apt-install
