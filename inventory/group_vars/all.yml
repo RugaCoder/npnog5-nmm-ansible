@@ -3,6 +3,6 @@ ansible_become_pass: lab
 ansible_python_interpreter: /usr/bin/python3
 
 class_password: lab
-class_group: Y
+class_group: 1
 class_en_password: lab
 

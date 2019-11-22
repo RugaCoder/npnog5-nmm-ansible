@@ -7,5 +7,8 @@ vmX-gY.lab.workalaya.net
 [smokeping_hosts]
 vmX-gY.lab.workalaya.net
 
+[netdot_hosts]
+vmX-gY.lab.workalaya.net
+
 [rancid_hosts]
 vmX-gY.lab.workalaya.net
