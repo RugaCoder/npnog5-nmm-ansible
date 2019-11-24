@@ -15,3 +15,7 @@ vmX-gY.lab.workalaya.net
 
 [nfsen_hosts]
 vmX-gY.lab.workalaya.net
+srv1-gY.lab.workalaya.net
+
+[syslog_hosts]
+srv1-gY.lab.workalaya.net

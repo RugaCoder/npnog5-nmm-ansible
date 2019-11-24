@@ -1,0 +1,34 @@
+- hosts: syslog_hosts
+  become: true
+  tasks:
+    - name: ensure package cache is up to date
+      apt: update_cache=yes cache_valid_time=3600
+      tags: install
+
+    - name: install syslog-ng
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - syslog-ng
+        - syslog-ng-core
+      tags: install
+
+    - name: create /var/log/remote-syslog directory
+      file:
+        path: /var/log/remote-syslog
+        state: directory
+      tags: config
+
+    - name: enable remote syslog settings
+      copy:
+        src: files/syslog-ng/remote-log.conf
+        dest: /etc/syslog-ng/conf.d/
+      notify: restart syslog-ng
+      tags: config
+
+  handlers:
+    - name: restart syslog-ng
+      service:
+        name: syslog-ng
+        state: restarted
