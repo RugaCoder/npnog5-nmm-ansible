@@ -25,10 +25,44 @@
         src: files/syslog-ng/remote-log.conf
         dest: /etc/syslog-ng/conf.d/
       notify: restart syslog-ng
-      tags: config
+      tags: config, tenshi
+
+    - name: updatae log rotation config
+      copy:
+        src: files/syslog-ng/syslog-consolidated
+        dest: /etc/logrotate.d/
+      tags: config, tenshi
+
+    - name: install tenshi
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - tenshi
+      tags: install, tenshi
+
+    - name: configure tenshi
+      copy:
+        src: templates/tenshi/network
+        dest: /etc/tenshi/includes-available/
+      notify: restart tenshi
+      tags: config, tenshi
+
+    - name: activate tenshi to load config file
+      file:
+        src: /etc/tenshi/includes-available/network
+        dest: /etc/tenshi/includes-active/network
+        state: link
+      notify: restart tenshi
+      tags: config, tenshi
 
   handlers:
     - name: restart syslog-ng
       service:
         name: syslog-ng
+        state: restarted
+
+    - name: restart tenshi
+      systemd:
+        name: tenshi
         state: restarted
