@@ -33,7 +33,7 @@
       copy:
         src: files/snmp/snmp.conf
         dest: /home/lab/.snmp/snmp.conf
-        mode: 600
+        mode: 0600
       become: false
       tags: snmp_client
 
