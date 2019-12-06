@@ -2,4 +2,5 @@ rtr1-g1.lab.workalaya.net
 vm1-g1.lab.workalaya.net
 vm2-g1.lab.workalaya.net
 vm3-g1.lab.workalaya.net
+vm4-g1.lab.workalaya.net
 srv1-g1.lab.workalaya.net
