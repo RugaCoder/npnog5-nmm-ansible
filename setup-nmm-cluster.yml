@@ -1,0 +1,13 @@
+---
+# This is the "build everything" playbook, which runs all playbooks
+
+- import_playbook: nagios.yml
+- import_playbook: snmp.yml
+- import_playbook: smokeping.yml
+- import_playbook: netdot.yml
+- import_playbook: rancid.yml
+- import_playbook: rancid_viewvc.yml
+- import_playbook: nfdump-nfsen.yml
+- import_playbook: syslog.yml
+- import_playbook: cacti.yml
+- import_playbook: tick-stack.yml
