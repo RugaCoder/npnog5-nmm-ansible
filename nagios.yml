@@ -90,6 +90,8 @@
         - routers.cfg
         - vms.cfg
         - servicegroups.cfg
+        - contacts.cfg
+        - noc.cfg
       tags: update_config
       notify: verify config
 
